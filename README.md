@@ -49,7 +49,7 @@ python tools/fetch_artifacts.py      # ~1.1 GB into ./artifacts, sha256-verified
 ```
 
 They are archived on Zenodo: [10.5281/zenodo.23328417](https://doi.org/10.5281/zenodo.23328417).
-Zenodo downloads can be slow (expect tens of minutes); the script shows progress.
+Zenodo can be slow (a test download took 7.5 minutes); the script shows progress.
 
 ## Quickstart
 
