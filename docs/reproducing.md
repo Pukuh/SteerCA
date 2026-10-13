@@ -31,6 +31,10 @@ and are not generated here.
 
 ## Tier 2: re-measure from the published checkpoints
 
+The checkpoints and logs are archived on Zenodo
+([10.5281/zenodo.23328417](https://doi.org/10.5281/zenodo.23328417)), and
+`tools/fetch_artifacts.py` downloads them from there.
+
 ```bash
 python tools/fetch_artifacts.py         # checkpoints + logs -> ./artifacts, sha256-verified
 python paper/collect.py sweep           # one target

@@ -32,7 +32,7 @@ This repository lets you:
 Python 3.10+ and a CUDA GPU for training (CPU works for tests, evaluation and the examples).
 
 ```bash
-git clone <this repository> SteerCA && cd SteerCA
+git clone https://github.com/Pukuh/SteerCA.git && cd SteerCA
 pip install -e .            # torch 2.8, torchrl 0.10, tensordict 0.10, ...
 pip install -e ".[dev]"     # + pytest
 python -m pytest            # ~2 minutes
@@ -47,6 +47,9 @@ To use the published checkpoints (for evaluation, warm starts or reproducing the
 ```bash
 python tools/fetch_artifacts.py      # ~1.1 GB into ./artifacts, sha256-verified
 ```
+
+They are archived on Zenodo: [10.5281/zenodo.23328417](https://doi.org/10.5281/zenodo.23328417).
+Zenodo downloads can be slow (expect tens of minutes); the script shows progress.
 
 ## Quickstart
 
@@ -289,6 +292,20 @@ If you use SteerCA, please cite:
 }
 ```
 
+The checkpoints and training logs:
+
+```bibtex
+@dataset{steerca_artifacts_2026,
+  title     = {{SteerCA} artifacts: trained policies and training logs},
+  author    = {Menchaca-Mendez, Ricardo},
+  year      = {2026},
+  version   = {1.0},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.23328417},
+  url       = {https://doi.org/10.5281/zenodo.23328417}
+}
+```
+
 ## License
 
-Code: [MIT](LICENSE). Checkpoints and logs (SteerCA-artifacts): CC BY 4.0.
+Code: [MIT](LICENSE). Checkpoints and logs ([Zenodo](https://doi.org/10.5281/zenodo.23328417)): CC BY 4.0.

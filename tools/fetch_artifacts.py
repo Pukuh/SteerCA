@@ -24,9 +24,9 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DEST = os.path.join(ROOT, "artifacts")
 
 # The archive's download URL (a .tar, .tar.gz or .zip of the SteerCA-artifacts
-# folder). TODO: set once the archive is deposited; STEERCA_ARTIFACTS_URL
-# overrides it.
-ARTIFACTS_URL = None
+# folder): version 1.0 on Zenodo, https://doi.org/10.5281/zenodo.23328417.
+# STEERCA_ARTIFACTS_URL overrides it.
+ARTIFACTS_URL = "https://zenodo.org/records/23328417/files/steerca-artifacts-v1.0.tar?download=1"
 
 
 def sha256(path):
@@ -74,7 +74,14 @@ def download(url):
         archive = os.path.join(tmp, os.path.basename(url.split("?")[0]) or "artifacts")
         print(f"downloading {url}")
         with urllib.request.urlopen(url) as resp, open(archive, "wb") as out:
-            shutil.copyfileobj(resp, out)
+            total = int(resp.headers.get("Content-Length") or 0)
+            done = 0
+            for block in iter(lambda: resp.read(1 << 20), b""):
+                out.write(block)
+                done += len(block)
+                pct = f" of {total / 1e6:,.0f} MB ({100 * done / total:.0f}%)" if total else " MB"
+                print(f"\r  {done / 1e6:,.0f}{pct}", end="", flush=True)
+            print()
         unpacked = os.path.join(tmp, "unpacked")
         if zipfile.is_zipfile(archive):
             with zipfile.ZipFile(archive) as z:

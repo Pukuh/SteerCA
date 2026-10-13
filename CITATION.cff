@@ -13,7 +13,12 @@ authors:
     family-names: Menchaca-Mendez
   - given-names: Rolando
     family-names: Menchaca-Mendez
-# TODO: add repository-code and the archive DOI once they exist.
+repository-code: "https://github.com/Pukuh/SteerCA"
+url: "https://github.com/Pukuh/SteerCA"
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23328417
+    description: "SteerCA artifacts v1.0: the trained policies and training logs behind the papers"
 preferred-citation:
   type: article
   title: "SteerCA: Reinforcement Learning Environments for Controlling Cellular Automata with Difficulty Set by Construction"
