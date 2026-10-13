@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use SteerCA, please cite the paper below."
+title: "SteerCA"
+type: software
+version: 1.0.0
+license: MIT
+authors:
+  - given-names: Joel
+    family-names: García
+  - given-names: Emanuel
+    family-names: Becerra
+  - given-names: Ricardo
+    family-names: Menchaca-Mendez
+  - given-names: Rolando
+    family-names: Menchaca-Mendez
+# TODO: add repository-code and the archive DOI once they exist.
+preferred-citation:
+  type: article
+  title: "SteerCA: Reinforcement Learning Environments for Controlling Cellular Automata with Difficulty Set by Construction"
+  authors:
+    - given-names: Joel
+      family-names: García
+    - given-names: Emanuel
+      family-names: Becerra
+    - given-names: Ricardo
+      family-names: Menchaca-Mendez
+    - given-names: Rolando
+      family-names: Menchaca-Mendez
+  # TODO: journal, year and DOI once published.

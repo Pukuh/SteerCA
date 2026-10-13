@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "steerca"
+version = "1.0.0"
+description = "SteerCA: reinforcement learning environments for controlling cellular automata, with difficulty set by construction"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [
+  { name = "Joel García" },
+  { name = "Emanuel Becerra" },
+  { name = "Ricardo Menchaca-Mendez" },
+  { name = "Rolando Menchaca-Mendez" },
+]
+keywords = ["reinforcement learning", "cellular automata", "benchmark", "torchrl", "wildfire"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+# The versions every published result was produced with. Newer torch/torchrl
+# releases will likely work, but bit-identical reproduction is only claimed here.
+dependencies = [
+  "torch==2.8.*",
+  "torchvision==0.23.*",
+  "torchrl==0.10.*",
+  "tensordict==0.10.*",
+  "numpy>=1.26",
+  "matplotlib>=3.8",
+  "tqdm",
+  "imageio>=2.30",
+]
+
+[project.optional-dependencies]
+wandb = ["wandb>=0.17"]
+dev = ["pytest>=8"]
+
+[tool.setuptools.packages.find]
+include = ["steerca*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-p no:logging"
