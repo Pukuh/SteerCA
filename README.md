@@ -1,5 +1,8 @@
 # SteerCA
 
+[![Code DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23329182.svg)](https://doi.org/10.5281/zenodo.23329182)
+[![Data DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23328417.svg)](https://doi.org/10.5281/zenodo.23328417)
+
 **Reinforcement learning environments for controlling cellular automata, with difficulty set by construction.**
 
 In SteerCA, an agent moves over the grid of a cellular automaton (CA) and changes
@@ -291,6 +294,10 @@ If you use SteerCA, please cite:
   note   = {TODO: journal, volume and DOI once published}
 }
 ```
+
+The code itself is archived on Zenodo with every release:
+[10.5281/zenodo.23329182](https://doi.org/10.5281/zenodo.23329182) resolves to the latest version, and
+v1.0.0 is [10.5281/zenodo.23329183](https://doi.org/10.5281/zenodo.23329183).
 
 The checkpoints and training logs:
 
