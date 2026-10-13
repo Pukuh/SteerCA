@@ -1,0 +1,36 @@
+{
+  "title": "SteerCA: reinforcement learning environments for controlling cellular automata",
+  "upload_type": "software",
+  "description": "<p>SteerCA is a framework of reinforcement learning environments in which an agent steers a cellular automaton by acting on the cell it stands on, racing the automaton's own dynamics. Every action costs automaton time, so the cost of acting is a continuous difficulty axis set by construction. This release contains the Firebreak forest-fire suite (batched GPU environments in TorchRL, a barrier planner as the reference, and planted instances with certified optima), PPO/A2C/SAC training, paired evaluation, an API for building new automata, and the scripts that regenerate every figure and table of the accompanying papers.</p><p>The trained policies and training logs are archived separately: <a href=\"https://doi.org/10.5281/zenodo.23328417\">10.5281/zenodo.23328417</a>.</p>",
+  "creators": [
+    {
+      "name": "García, Joel"
+    },
+    {
+      "name": "Becerra, Emanuel"
+    },
+    {
+      "name": "Menchaca-Mendez, Ricardo"
+    },
+    {
+      "name": "Menchaca-Mendez, Rolando"
+    }
+  ],
+  "license": "MIT",
+  "keywords": [
+    "reinforcement learning",
+    "cellular automata",
+    "benchmark",
+    "TorchRL",
+    "wildfire",
+    "firebreak"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "10.5281/zenodo.23328417",
+      "relation": "isSupplementedBy",
+      "resource_type": "dataset",
+      "scheme": "doi"
+    }
+  ]
+}
