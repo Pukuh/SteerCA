@@ -233,7 +233,7 @@ python paper/figures.py
 
 # Tier 2: re-measure from the published checkpoints and logs
 python tools/fetch_artifacts.py
-python paper/collect.py sweep        # or: curves, beyond, extra, others, baselines, warmstart,
+python paper/collect.py sweep        # or: curves, beyond, extra, seeds, others, baselines, warmstart,
                                      #     zeroshot, planted, ceiling, runtime, throughput, all
 python paper/figures.py
 

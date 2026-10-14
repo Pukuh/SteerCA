@@ -51,6 +51,7 @@ python paper/figures.py
 | `sweep` | `sweep.csv` | the 12 r10 cells (8/16/32 × s = 0.12, 0.24, 0.4, 0.6), PPO vs planner, 100 paired episodes | GPU, ~10 min |
 | `beyond` | `beyond.csv`, `beyond_onset.csv` | the same at s = 1 and 1.2 (tc = tm = 0.5, 0.6) | GPU, minutes |
 | `extra` | `extra_8x8.csv` | the extra 8×8 runs: low costs and second seeds | GPU, minutes |
+| `seeds` | `seed2_ladder.csv` | a second 16×16 and 32×32 ladder at s = 0.24, PPO vs planner; its checkpoints are not in the v1.0 archive, so with it the CSV is left as shipped | GPU, minutes |
 | `onset` | `onset_8x8.csv` | frames for 8×8 PPO to reach 95% of the planner (logs + the CSVs above) | seconds |
 | `others` | `others_8x8.csv` | A2C and SAC at every 8×8 cost, paired with the planner | GPU, minutes |
 | `baselines` | `baselines.csv` | the A2C/SAC sweep, tuning, robustness and sanity runs (logs + checkpoint probes) | CPU, minutes |
@@ -62,7 +63,7 @@ python paper/figures.py
 | `throughput` | `env_throughput.csv` | environment steps per second, GPU vs CPU | minutes |
 
 **What reproduces exactly.** The paired evaluations (`sweep`, `beyond`, `extra`,
-`others`, `zeroshot`) are deterministic on a given device: rerunning them on CUDA
+`seeds`, `others`, `zeroshot`) are deterministic on a given device: rerunning them on CUDA
 reproduces the shipped CSVs. Two caveats:
 
 * The reset's random draws differ between CPU and CUDA, so a CPU run scores
@@ -84,6 +85,7 @@ paper/collect.py sweep`.
 |---|---|
 | `scripts/run_pipeline.sh 0.06 0.12 0.2 0.3 0.5 0.6` | one 8 → 16 → 32 warm-start ladder per action cost (the sweep and beyond-s=1 cells) |
 | `scripts/run_low_cost_8x8.sh`, `scripts/run_second_seeds.sh` | the extra 8×8 runs: s = 0.04, 0.08 and a second seed at every cost |
+| `STEERCA_SEED=2 STEERCA_TAG=seed2 STEERCA_SIZES="16 32" scripts/run_pipeline.sh 0.12` | the second s = 0.24 ladder, after the 8×8 second seed at that cost |
 | `scripts/run_baseline_sweep.sh`, `run_baseline_tuned.sh`, `run_baseline_robustness.sh`, `run_sanity_check.sh` | the A2C and SAC baselines, their tuning, and the verification task |
 | `scripts/run_a2c_onset.sh`, `scripts/run_sac_onset.sh` | A2C and SAC at every 8×8 cost |
 | `STEERCA_N=8 STEERCA_TC=0.06 STEERCA_TM=0.06 STEERCA_FRAMES=600000 STEERCA_INIT_FROM=none STEERCA_TAG=pricing STEERCA_CUT_TREE_AHEAD=a STEERCA_CUT_TREE_IMMINENT=b python -m steerca.train` | the cut-pricing runs, with (a, b) = (0, 0), (0, 1), (0.5, 0.5), and (1, 1) at `STEERCA_FRAMES=4000000` |
@@ -100,7 +102,7 @@ some CUDA kernels in the backward pass are nondeterministic. The initial
 networks and the first batch of experience are identical across runs, but the
 weights are not after training. Expect retrained numbers to match the published
 ones statistically, not to the digit. The papers' own second seeds
-(`extra_8x8.csv`) show how much one cell varies between runs.
+(`extra_8x8.csv`, `seed2_ladder.csv`) show how much one cell varies between runs.
 
 ## Where each figure and table comes from
 

@@ -8,6 +8,7 @@ Three products, each independently runnable:
     python paper/collect.py runtime   # planner time per decision -> planner_runtime.csv
     python paper/collect.py beyond    # PPO vs planner at s = 1, 1.2 -> beyond.csv  (GPU)
     python paper/collect.py extra     # extra 8x8 runs (s = 0.04, 0.08, second seeds) vs planner -> extra_8x8.csv  (GPU)
+    python paper/collect.py seeds     # second s = 0.24 ladder, 16x16 and 32x32, vs planner -> seed2_ladder.csv  (GPU)
         python paper/collect.py onset     # 8x8 PPO frames/episodes to 95% of planner -> onset_8x8.csv
     python paper/collect.py others    # 8x8 A2C / SAC at their best settings vs planner -> others_8x8.csv  (GPU)
     python paper/collect.py throughput  # environment steps per second, GPU vs CPU -> env_throughput.csv
@@ -266,6 +267,28 @@ def collect_extra(out, episodes, device):
             print(f"  {label}: still training, skipped", file=sys.stderr)
             continue
         compare(out, 8, [cost], episodes, device, ckpt)
+
+
+# The second ladder at s = 0.24: 16x16 and 32x32 stages warm-started from the
+# seed2 run below them, so the PPO lead there is checked against a second seed.
+SEED_LADDER = ((16, 0.12, "seed2"), (32, 0.12, "seed2"))
+
+
+def collect_seeds(out, episodes, device):
+    """PPO against the planner for the second-seed ladder stages, paired.
+
+    All or nothing: if a stage's checkpoint is missing, the CSV already on disk
+    is left as it is rather than rewritten with a row short.
+    """
+    runs = [(n, cost, _tagged(ckpt_path(n, cost), tag)) for n, cost, tag in SEED_LADDER]
+    missing = [os.path.basename(c) for _, _, c in runs if not os.path.exists(c)]
+    if missing:
+        print(f"  missing {', '.join(missing)}; {os.path.basename(out)} left unchanged",
+              file=sys.stderr)
+        return
+    fresh(out)
+    for n, cost, ckpt in runs:
+        compare(out, n, [cost], episodes, device, ckpt)
 
 
 def collect_zeroshot(out, episodes, device):
@@ -900,7 +923,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("what", nargs="?", default="all",
                     choices=["all", "curves", "sweep", "ceiling", "baselines", "warmstart",
-                                                          "runtime", "beyond", "extra", "onset", "others",
+                                                          "runtime", "beyond", "extra", "seeds", "onset", "others",
                              "throughput", "planted", "zeroshot"])
     ap.add_argument("--episodes", type=int, default=100,
                     help="paired episodes per cell for `sweep`")
@@ -942,6 +965,9 @@ def main():
     if args.what in ("all", "extra"):
         print("== extra 8x8 runs vs planner ==")
         collect_extra(os.path.join(DATA, "extra_8x8.csv"), args.episodes, args.device or gpu)
+    if args.what in ("all", "seeds"):
+        print("== second s = 0.24 ladder vs planner ==")
+        collect_seeds(os.path.join(DATA, "seed2_ladder.csv"), args.episodes, args.device or gpu)
     if args.what in ("all", "onset"):
         print("== 8x8 PPO: time to come within 5% of the planner ==")
         collect_onset(os.path.join(DATA, "onset_8x8.csv"))
